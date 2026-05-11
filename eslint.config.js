@@ -7,8 +7,7 @@ module.exports = [
                 "always"
             ],
             "indent": [
-                "error",
-                2
+                "off"
             ],
             "linebreak-style": [
                 "error",
