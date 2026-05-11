@@ -1,41 +1,51 @@
-/*
- * Implements the problem of triangle calcuation
- */
+let mode = 'toRoman'; // O 'toDecimal'
 
-var INVALID_ARGUMENTS = 'The arguments were not valid';
-var NOT_A_TRIANGLE = 'Impossible to create a triangle with those sides';
-var EQUILATERAL = 'Equilateral triangle';
-var ISOSCELES = 'Isosceles triangle';
-var SCALENE = 'Scalene triangle';
+function toggleMode() {
+    mode = (mode === 'toRoman') ? 'toDecimal' : 'toRoman';
+    document.getElementById('title').innerText = mode === 'toRoman' ? 'Decimal to Roman' : 'Roman to Decimal';
+    document.getElementById('inputVal').placeholder = mode === 'toRoman' ? 'Ej. 155' : 'Ej. CLV';
+    document.getElementById('inputVal').value = '';
+    document.getElementById('result').innerText = 'Result: -';
+}
 
-/*
- * Given the three sides of a triangle calculates the type of the
- * triangle.
- */
-function getTriangleType(lengthA, lengthB, lengthC) { 
-  var type = '';
-  // In Javascript isNaN returns true if the argument is Not a Number (NaN)
-  if ( isNaN(lengthA) || isNaN(lengthB) || isNaN(lengthC) ) { //Inputs are not numbers
-    type = INVALID_ARGUMENTS;
-  } else { // Inputs are numbers
-    // Convert from objects to float
-    var a = parseFloat(lengthA);
-    var b = parseFloat(lengthB);
-    var c = parseFloat(lengthC);
-    if ((a <= 0) || (b <= 0) || (c <= 0)) { // A side is not positive
-      type = INVALID_ARGUMENTS;
-    } else if ( (a+b <= c) || (a+c <= b) || (b+c <= a)) { // invalid triangle
-      type = NOT_A_TRIANGLE;
-    } else { // All sides different = scalene
-      if ( (a==b) && (b==c)) {
-        type = EQUILATERAL;
-      } else if ( (a==b) || (b==c) || (a==c)) {
-        type = ISOSCELES;
-      } else {
-        type = SCALENE;
-      }
+function toRoman(num) {
+    if (isNaN(num) || num <= 0 || num > 3999) return "Invalid (1-3999)";
+    const lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1};
+    let roman = '';
+    for (let i in lookup) {
+        while (num >= lookup[i]) {
+            roman += i;
+            num -= lookup[i];
+        }
     }
-  }
-  
-  return type;
+    return roman;
+}
+
+function toDecimal(roman) {
+    roman = roman.toUpperCase();
+    const lookup = {I:1,V:5,X:10,L:50,C:100,D:500,M:1000};
+    let decimal = 0;
+    for (let i = 0; i < roman.length; i++) {
+        let cur = lookup[roman[i]];
+        let next = lookup[roman[i+1]];
+        if (next > cur) {
+            decimal += (next - cur);
+            i++;
+        } else {
+            decimal += cur;
+        }
+    }
+    return isNaN(decimal) ? "Invalid Roman" : decimal;
+}
+
+function convertir() {
+    const val = document.getElementById('inputVal').value;
+    const resElement = document.getElementById('result');
+    if (!val) { resElement.innerText = 'Result: -'; return; }
+    
+    if (mode === 'toRoman') {
+        resElement.innerText = 'Result: ' + toRoman(parseInt(val));
+    } else {
+        resElement.innerText = 'Result: ' + toDecimal(val);
+    }
 }
