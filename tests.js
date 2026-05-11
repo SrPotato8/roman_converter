@@ -1,88 +1,105 @@
-// Use Chai's expect for assertions
 const expect = chai.expect;
 
-describe('valid triangle domains', function() {
-  it('all side equals to 2 should be an equilateral', function() {
-    expect(getTriangleType(2,2,2)).to.equal(EQUILATERAL);
-  });
+// INTEGER TO ROMAN TESTS
+describe('Integer to Roman', function() {
+    
+    it('TC-1: should convert 1 to "I"', function() {
+        expect(toRoman(1)).to.equal('I');
+    });
+    
+    it('TC-2: should convert 4 to "IV"', function() {
+        expect(toRoman(4)).to.equal('IV');
+    });
+    
+    it('TC-3: should convert 3999 to "MMMCMXCIX"', function() {
+        expect(toRoman(3999)).to.equal('MMMCMXCIX');
+    });
+    
+    it('TC-4: should convert 0 to "Invalid (1-3999)"', function() {
+        expect(toRoman(0)).to.equal('Invalid (1-3999)');
+    });
+    
+    it('TC-5: should convert 4000 to "Invalid (1-3999)"', function() {
+        expect(toRoman(4000)).to.equal('Invalid (1-3999)');
+    });
+    
+    it('TC-6: should convert -1 to "Invalid (1-3999)"', function() {
+        expect(toRoman(-1)).to.equal('Invalid (1-3999)');
+    });
 
-  it('all side equals to a decimal number should be an equilateral', function() {
-    expect(getTriangleType(0.1,0.1,0.1)).to.equal(EQUILATERAL);
-  });
+    it('TC-7: should convert +1 to "I"', function() {
+        expect(toRoman(1)).to.equal('I');
+    });
+    
+    it('TC-8: should convert 10.5 to "Invalid (1-3999)"', function() {
+        expect(toRoman(10.5)).to.equal('Invalid (1-3999)');
+    });
+    
+    it('TC-9: should convert "a" to "Invalid (1-3999)"', function() {
+        expect(toRoman('a')).to.equal('Invalid (1-3999)');
+    });
+    
+    it('TC-10: should convert 2 to "II"', function() {
+        expect(toRoman(2)).to.equal('II');
+    });
+    
+    it('TC-11: should convert 44 to "XLIV"', function() {
+        expect(toRoman(44)).to.equal('XLIV');
+    });
+    
+    it('TC-12: should convert 99 to "XCIX"', function() {
+        expect(toRoman(99)).to.equal('XCIX');
+    });
+    
+    it('TC-13: should convert 500 to "D"', function() {
+        expect(toRoman(500)).to.equal('D');
+    });
 
-  it('all side equals to a big number should be an equilateral', function() {
-    expect(getTriangleType(99999,99999,99999)).to.equal(EQUILATERAL);
-  });
-
-  it('first and second sides equal but different to third should be an isosceles', function() {
-    expect(getTriangleType(2,2,3)).to.equal(ISOSCELES);
-  });
-
-  it('first and third sides equal but different to second should be an isosceles', function() {
-    expect(getTriangleType(0.1,0.15,0.1)).to.equal(ISOSCELES);
-  });
-
-  it('second and third sides equal but different to first should be an isosceles', function() {
-    expect(getTriangleType(99999,99998,99998)).to.equal(ISOSCELES);
-  });
-
-  it('all three sides different with third the biggest should be an scalene', function() {
-    expect(getTriangleType(2,3,4)).to.equal(SCALENE);
-  });
-
-  it('all three sides different with second the biggest should be an scalene', function() {
-    expect(getTriangleType(2,10,9)).to.equal(SCALENE);
-  });
-
-  it('all three sides different with first the biggest should be an scalene', function() {
-    expect(getTriangleType(10000.03,10000.01,10000.02)).to.equal(SCALENE);
-  });
+    it('TC-14: should convert 0 to "Invalid (1-3999)"', function() {
+        expect(toRoman(0)).to.equal('Invalid (1-3999)');
+    });
 });
 
-describe('not possible to create a triangle', function() {
-    it('if the addition of first and second is equal to third it should be not a triangle', function() {
-      expect(getTriangleType(1,3,4)).to.equal(NOT_A_TRIANGLE);
+// ROMAN TO INTEGER TESTS
+describe('Roman to Integer', function() {
+    
+    it('TC-1: should convert "II" to 2', function() {
+        expect(toDecimal('II')).to.equal(2);
+    });
+    
+    it('TC-2: should convert "CDII" to 402', function() {
+        expect(toDecimal('CDII')).to.equal(402);
+    });
+    
+    it('TC-3: should convert "VV" to "Invalid Roman"', function() {
+        expect(toDecimal('VV')).to.equal('Invalid Roman');
+    });
+    
+    it('TC-4: should convert "A" to "Invalid Roman"', function() {
+        expect(toDecimal('A')).to.equal('Invalid Roman');
     });
 
-    it('if the addition of first and third is equal to second it should be not a triangle', function() {
-        expect(getTriangleType(10,20,10)).to.equal(NOT_A_TRIANGLE);
+    it('TC-5: should convert " "I" " to "Invalid Roman"', function() {
+        expect(toDecimal(' "I" ')).to.equal('Invalid Roman');
     });
-
-    it('if the addition of second and third is equal to first it should be not a triangle', function() {
-        expect(getTriangleType(0.2,0.1,0.1)).to.equal(NOT_A_TRIANGLE);
+    
+    it('TC-6: should convert "1" to "Invalid Roman"', function() {
+        expect(toDecimal('1')).to.equal('Invalid Roman');
     });
-  
-    it('if the addition of first and third is smaller to second it should be not a triangle', function() {
-          expect(getTriangleType(10,20.00001,10)).to.equal(NOT_A_TRIANGLE);
+    
+    it('TC-7: should convert "III" to 3', function() {
+        expect(toDecimal('III')).to.equal(3);
+    });
+    
+    it('TC-8: should convert "VXX" to "Invalid Roman"', function() {
+        expect(toDecimal('VXX')).to.equal('Invalid Roman');
+    });
+    
+    it('TC-9: should convert "MMMCMXCIX" to 3999', function() {
+        expect(toDecimal('MMMCMXCIX')).to.equal(3999);
+    });
+    
+    it('TC-10: should convert "MC M" to "Invalid Roman"', function() {
+        expect(toDecimal('MC M')).to.equal('Invalid Roman');
     });
 });
- 
-describe('invalid arguments', function() {
-    it('if all arguments are 0 it should be invalid arguments', function() {
-      expect(getTriangleType(0,0,0)).to.equal(INVALID_ARGUMENTS);
-    });
-
-    it('if first side is negative it should be invalid arguments', function() {
-        expect(getTriangleType(-1,1,1)).to.equal(INVALID_ARGUMENTS);
-    });
-
-    it('if second side is negative it should be invalid arguments', function() {
-        expect(getTriangleType(2,-5,3)).to.equal(INVALID_ARGUMENTS);
-    });
-  
-    it('if third side is negative it should be invalid arguments', function() {
-        expect(getTriangleType(2,5, -2.99999)).to.equal(INVALID_ARGUMENTS);
-    });
-
-    it('if first side is a letter it should be invalid arguments', function() {
-        expect(getTriangleType('N',1,1)).to.equal(INVALID_ARGUMENTS);
-    });
-
-    it('if second side is a special char it should be invalid arguments', function() {
-        expect(getTriangleType(2,'!',3)).to.equal(INVALID_ARGUMENTS);
-    });
-  
-    it('if third side is a letter it should be invalid arguments', function() {
-        expect(getTriangleType(2,5, 'AA')).to.equal(INVALID_ARGUMENTS);
-    });
-});    
