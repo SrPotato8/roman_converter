@@ -6,6 +6,14 @@ function toggleMode() {
     document.getElementById('inputVal').placeholder = mode === 'toRoman' ? 'Ej. 155' : 'Ej. CLV';
     document.getElementById('inputVal').value = '';
     document.getElementById('result').innerText = 'Result: -';
+
+    // Añade esta línea para enviar el evento a Google Analytics
+    gtag('event', 'change_mode_click', {
+        'event_category': 'interaction',
+        'event_label': 'Cambiando direccion de conversion'
+    });
+    
+    console.log("Evento change_mode_click enviado"); // Para que verifiques en la consola
 }
 
 function toRoman(num) {
