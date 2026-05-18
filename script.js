@@ -7,13 +7,12 @@ function toggleMode() {
     document.getElementById('inputVal').value = '';
     document.getElementById('result').innerText = 'Result: -';
 
-    // Añade esta línea para enviar el evento a Google Analytics
     gtag('event', 'change_mode_click', {
         'event_category': 'interaction',
         'event_label': 'Cambiando direccion de conversion'
     });
     
-    console.log('Evento change_mode_click enviado'); // Para que verifiques en la consola
+    console.log('Event change_mode_click was sent');
 }
 
 function toRoman(num) {
@@ -72,12 +71,11 @@ function convertir() {
 
     resElement.innerText = 'Result: ' + result;
 
-    // EVENTO 2: Error de conversión (solo si el resultado contiene 'Invalid')
     if (result.toString().includes('Invalid')) {
         gtag('event', 'conversion_error', {
             'event_category': 'error',
             'event_label': val
         });
-        console.log('Evento GA4 enviado: conversion_error');
+        console.log('Event conversion_error was sent');
     }
 }
